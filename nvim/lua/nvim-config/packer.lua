@@ -47,10 +47,27 @@ return require('packer').startup(function(use)
 	}
 	use("romainl/Apprentice")
 	use("folke/tokyonight.nvim")
-	use {'nvim-orgmode/orgmode', config = function()
-		require('orgmode').setup{}
-	end
-	}
+	use {
+    "nvim-neorg/neorg",
+    -- tag = "*",
+    ft = "norg",
+    after = "nvim-treesitter", -- You may want to specify Telescope here as well
+    config = function()
+        require('neorg').setup {
+            load = {
+                ["core.defaults"] = {}, -- Loads default behaviour
+                ["core.concealer"] = {}, -- Adds pretty icons to your documents
+                ["core.dirman"] = { -- Manages Neorg workspaces
+                    config = {
+                        workspaces = {
+                            notes = "~/notes",
+                        },
+                    },
+                },
+            },
+        }
+    end
+}
 	use {
 		'rmagatti/auto-session',
 		config = function()
@@ -69,7 +86,15 @@ return require('packer').startup(function(use)
 			})
 		end
 	})
+	use{"rebelot/kanagawa.nvim"}
+	use{ "catppuccin/nvim", as = "catppuccin" }
 --	use('nvim-tree/nvim-web-devicons') -- OPTIONAL: for file icons
 --	use('lewis6991/gitsigns.nvim') -- OPTIONAL: for git status
 --	use('romgrk/barbar.nvim')
+	use { 'feline-nvim/feline.nvim', branch = '0.5-compat' }
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+	}
+	use {"lervag/vimtex"}
 end)
